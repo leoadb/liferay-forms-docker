@@ -19,10 +19,10 @@ ENV CATALINA_OPTS="$CATALINA_OPTS -Dfile.encoding=UTF8 -Djava.net.preferIPv4Stac
 
 COPY ./deploy /liferay/deploy
 COPY ./osgi /liferay/osgi
-COPY ./tomcat-9.0.10/bin /liferay/tomcat/bin
-COPY ./tomcat-9.0.10/conf /liferay/tomcat/conf
-COPY ./tomcat-9.0.10/lib /liferay/tomcat/lib
-COPY ./tomcat-9.0.10/webapps /liferay/tomcat/webapps
+COPY ./tomcat-*/bin /liferay/tomcat/bin
+COPY ./tomcat-*/conf /liferay/tomcat/conf
+COPY ./tomcat-*/lib /liferay/tomcat/lib
+COPY ./tomcat-*/webapps /liferay/tomcat/webapps
 
 RUN rm /liferay/tomcat/webapps/ROOT/WEB-INF/classes/portal-ext.properties \
   && touch /liferay/portal-setup-wizard.properties \
