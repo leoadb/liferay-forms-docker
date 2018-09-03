@@ -9,6 +9,7 @@ elif [ -z "$LIFERAY_HOME" ]; then
   echo '\n Please set the environment variable: LIFERAY_HOME\n'
   exit 1
 else
-  docker build -t liferay/com-liferay-forms:$TICKET $LIFERAY_HOME
-  docker push liferay/com-liferay-forms:$TICKET
+  echo 123456 | docker login -u forms --password-stdin 192.168.109.41:5000
+  docker build -t 192.168.109.41:5000/liferay/com-liferay-forms:$TICKET -f ./Dockerfile $LIFERAY_HOME
+  docker push 192.168.109.41:5000/liferay/com-liferay-forms:$TICKET
 fi
