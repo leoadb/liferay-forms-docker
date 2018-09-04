@@ -10,6 +10,7 @@ elif [ -z "$LIFERAY_HOME" ]; then
   exit 1
 else
   echo 123456 | docker login -u forms --password-stdin 192.168.109.41:5000
-  docker build -t 192.168.109.41:5000/liferay/com-liferay-forms:$TICKET -f ./Dockerfile $LIFERAY_HOME
+  docker build --no-cache -t 192.168.109.41:5000/liferay/com-liferay-forms:$TICKET -f ./Dockerfile $LIFERAY_HOME
   docker push 192.168.109.41:5000/liferay/com-liferay-forms:$TICKET
+  docker rmi -f 192.168.109.41:5000/liferay/com-liferay-forms:$TICKET
 fi
