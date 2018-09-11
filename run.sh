@@ -1,20 +1,32 @@
 #!/bin/sh
 
-TICKET=$1
+read -p 'What is the ticket number: ' ticket
 
-PORT=$2
+echo 'Where do you want to pull the Docker image?\n1 - Local (default)\n2 - Docker Hub (external)'
 
-echo $PORT
+read repository
 
-if [ -z "$TICKET" ]; then
-  echo '\nPlease inform the ticket number.\n'
-  exit 1
-else
-  if [ -z "$PORT" ]; then
-    PORT=8080
-  fi
-  docker kill $TICKET
-  docker rm -f $TICKET
-  docker pull 192.168.109.41:5000/liferay/com-liferay-forms:$TICKET
-  docker run -p $PORT:8080 --name $TICKET 192.168.109.41:5000/liferay/com-liferay-forms:$TICKET
+if [ -z "$repository" ]; then
+  repository=1
+fi
+
+read -p 'What is the port number you want to run the server (8080): ' port
+
+if [ -z "$port" ]; then
+  port=8080
+fi
+
+container=$(docker ps -a | grep "$ticket" | wc -l)
+
+if [ $container -eq 1 ]; then
+  docker kill $ticket
+  docker rm -f $ticket
+fi
+
+if [ $repository -eq 1 ]; then
+  docker pull 192.168.109.41:5000/liferay/com-liferay-forms:$ticket
+  docker run -p $port:8080 --name $ticket 192.168.109.41:5000/liferay/com-liferay-forms:$ticket
+elif [ $repository -eq 2 ]; then
+  docker pull liferay/com-liferay-forms-qa:$ticket
+  docker run -p $port:8080 --name $ticket liferay/com-liferay-forms-qa:$ticket
 fi
