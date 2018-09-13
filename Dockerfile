@@ -24,7 +24,7 @@ COPY ./tomcat-*/conf /liferay/tomcat/conf
 COPY ./tomcat-*/lib /liferay/tomcat/lib
 COPY ./tomcat-*/webapps /liferay/tomcat/webapps
 
-RUN rm /liferay/tomcat/webapps/ROOT/WEB-INF/classes/portal-ext.properties \
+RUN rm -f /liferay/tomcat/webapps/ROOT/WEB-INF/classes/portal-ext.properties \
   && touch /liferay/portal-setup-wizard.properties \
   && echo $'admin.email.from.address=test@liferay.com\n\
      admin.email.from.name=Test Test\n\
